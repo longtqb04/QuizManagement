@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="hello ">
+    <section class="banner-slider">
+        <ul id="adaptive">
+            <li><img src="~/Image/slbktv.jpg" width="1500" height="690"></li>
+        </ul>
+    </section>
+</div>
+
+
+<div class="overlay d-flex justify-content-center align-items-center vh-100">
+    <div class="account-box bg-white p-4 rounded shadow" style="width: 100%; max-width: 400px;">
+        <h2 class="text-center mb-4">Login</h2>
+        <form asp-action="MainPageLecturer" asp-controller="Home" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" />
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember me</label>
+            </div>
+            <input type="submit" value="Login" class="btn w-100 p-2 text-white hi" style="background-color: #121C57" />
+            <p class="text-center mt-3">
+                Don't have an account? <a asp-controller="Login" asp-action="Register" class="text-decoration-none">Register</a>
+            </p>
+            <div class="text-center mt-3">
+                <a asp-controller="Login" asp-action="Login" class="text-decoration-none">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .account-box {
+        max-width: 400px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Bóng mờ */
+    }
+
+    .hi:hover {
+        background-color: forestgreen !important;
+    }
+</style>

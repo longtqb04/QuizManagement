@@ -18,6 +18,41 @@ namespace QuizManagement.Controllers
             return View();
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult LoginAdmin()
+        {
+            return View();
+        }
+
+        public IActionResult LoginLecturer()
+        {
+            return View();
+        }
+
+        public IActionResult MainPage()
+        {
+            return View();
+        }
+
+        public IActionResult MainPageAdmin()
+        {
+            return View();
+        }
+
+        public IActionResult MainPageLecturer()
+        {
+            return View();
+        }
+
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
