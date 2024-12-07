@@ -48,6 +48,20 @@ namespace QuizManagement.Controllers
             return View();
         }
 
+        public IActionResult ManageLecturers()
+        {
+            return View();
+        }
+
+        public IActionResult ManageStudents()
+        {
+            return View();
+        }
+        public IActionResult ManageStudents_LecturerView()
+        {
+            return View();
+        }
+
         public IActionResult Profile()
         {
             return View();
