@@ -35,13 +35,13 @@
                                 Quản lý
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
-                                <li><a class="dropdown-item hello" href="#">Đề thi</a></li>
-                                <li><a class="dropdown-item hello" href="#">Câu hỏi</a></li>
-                                <li><a class="dropdown-item hello" href="#">Sinh viên</a></li>
+                                <li><a class="dropdown-item hello" href="ManageQuizzes">Đề thi</a></li>
+                                <li><a class="dropdown-item hello" href="ManageQuestions">Câu hỏi</a></li>
+                                <li><a class="dropdown-item hello" href="ManageStudents_LecturerView">Sinh viên</a></li>
                             </ul>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link text-dark hello" asp-area="" asp-controller="Home" asp-action="">Nhập điểm</a>
+                            <a class="nav-link text-dark hello" asp-area="" asp-controller="Home" asp-action="ManageScores">Nhập điểm</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link text-dark hello" asp-area="" asp-controller="Home" asp-action="">Hỗ trợ</a>
@@ -78,7 +78,7 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                                 <li><a class="dropdown-item hello" asp-area="" asp-controller="Login" asp-action="Login">Log In</a></li>
                                 <li><a class="dropdown-item hello" asp-area="" asp-controller="Login" asp-action="Register">Sign Up</a></li>
-                                <li><a class="dropdown-item hello" asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
+                                <li><a class="dropdown-item hello" asp-area="" asp-controller="Home" asp-action="ProfileLecturer">Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a asp-controller="Home" asp-action="Index" class="dropdown-item mb-2 hello">Log Out<i class="fa-solid fa-right-from-bracket ms-2"></i></a></li>
                             </ul>

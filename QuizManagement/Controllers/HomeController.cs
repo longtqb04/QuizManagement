@@ -13,6 +13,11 @@ namespace QuizManagement.Controllers
             _logger = logger;
         }
 
+        public IActionResult EnterQuiz()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -53,16 +58,62 @@ namespace QuizManagement.Controllers
             return View();
         }
 
+        public IActionResult ManageScores()
+        {
+            return View();
+        }
+
         public IActionResult ManageStudents()
         {
             return View();
         }
+
         public IActionResult ManageStudents_LecturerView()
         {
             return View();
         }
 
+        public IActionResult ManageQuestions()
+        {
+            return View();
+        }
+
+        public IActionResult ManageQuizzes()
+        {
+            return View();
+        }
+
         public IActionResult Profile()
+        {
+            return View();
+        }
+
+        public IActionResult ProfileAdmin()
+        {
+            return View();
+        }
+
+        public IActionResult ProfileLecturer()
+        {
+            return View();
+        }
+
+        public IActionResult QuizResult()
+        {
+            return View();
+        }
+
+        public IActionResult TakeQuiz()
+        {
+            return View();
+        }
+
+        public IActionResult ViewScores()
+        {
+            return View();
+        }
+
+        public IActionResult ViewQuizzes()
         {
             return View();
         }

@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/_MainPageLecturer.cshtml";
+}
+
+<div class="hello">
+    <br />
+    <h1 style="text-align:center;">Quản lý điểm</h1>
+    <br />
+</div>
+
+<div class="buttons">
+    <button style="background-color: black;color:white;">Tìm kiếm</button>
+    <button style="background-color: deepskyblue;" onclick="location.href='@Url.Action("MainPageLecturer", "Home")'">Trở về trang chủ</button>
+</div>
+
+<style>
+    button {
+        padding: 10px;
+        margin: 10px 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>

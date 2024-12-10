@@ -1,0 +1,89 @@
+﻿@{
+    Layout = "~/Views/Shared/_MainPage.cshtml";
+}
+
+<div class="container">
+    <br />
+    <h1 style="text-align:center;">Danh sách bài thi</h1>
+    <br />
+    <ul class="quiz-list">
+        <li class="quiz">
+            <div class="details">
+                <h2>Quiz 024001</h2>
+                <span style="color: gray;">Số câu: 10</span>
+                <span style="color: gray;">•</span>
+                <span style="color: gray;">Thời gian: 10 phút</span>
+            </div>
+            <div class="enter">
+                <button onclick="location.href='@Url.Action("EnterQuiz", "Home")'">Vào thi</button>
+            </div>
+        </li>
+        <li class="quiz">
+            <div class="details">
+                <h2>Quiz 024002</h2>
+                <span style="color: gray;">Số câu: 10</span>
+                <span style="color: gray;">•</span>
+                <span style="color: gray;">Thời gian: 10 phút</span>
+            </div>
+            <div class="enter">
+                <button onclick="location.href='@Url.Action("EnterQuiz", "Home")'">Vào thi</button>
+            </div>
+        </li>
+        <li class="quiz">
+            <div class="details">
+                <h2>Quiz 024003</h2>
+                <span style="color: gray;">Số câu: 10</span>
+                <span style="color: gray;">•</span>
+                <span style="color: gray;">Thời gian: 10 phút</span>
+            </div>
+            <div class="enter">
+                <button onclick="location.href='@Url.Action("EnterQuiz", "Home")'">Vào thi</button>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<style>
+    .container {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .quiz-list {
+        width: 1200px;
+        height: 500px;
+        overflow: auto;
+    }
+
+    .quiz {
+        border: 1px solid gray;
+        margin: 15px 15px 15px 100px;
+        border-radius: 10px;
+        width: 1000px;
+        height: 100px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: row;
+        text-align: left;
+    }
+
+        .details {
+            width: 900px;
+            margin: 10px;
+        }
+
+        .enter {
+            width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 10px 10px 10px;
+        }
+
+    button {
+        border: none;
+        background-color: deepskyblue;
+        border-radius: 5px;
+        height: 35px;
+    }
+</style>

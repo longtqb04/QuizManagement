@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_MainPage.cshtml";
+}
+
+<div class="container">
+    <br />
+    <h1 style="text-align:center;">Sẵn sàng vào thi</h1>
+    <br />
+    <h2 style="text-align:center;">Quiz 024002</h2>
+    <br />
+    <p style="text-align:center;">Số câu hỏi: 10</p>
+    <br />
+    <p style="text-align:center;">Thời gian: 10 phút</p>
+    <br />
+    <div class="enter">
+        <button onclick="location.href='@Url.Action("TakeQuiz", "Home")'">Vào thi</button>
+    </div>
+</div>
+
+<style>
+    .enter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        border: none;
+        background-color: deepskyblue;
+        border-radius: 5px;
+        height: 35px;
+    }
+
+    .container {
+        height: 100vh;
+        width: 100vw;
+    }
+</style>
