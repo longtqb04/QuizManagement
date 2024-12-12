@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = "~/Views/Shared/_MainPageAdmin.cshtml";
 }
 
@@ -13,6 +14,31 @@
     <button style="background-color: black;color:white;">Tìm kiếm</button>
     <button style="background-color: deepskyblue;" onclick="location.href='@Url.Action("MainPageAdmin", "Home")'">Trở về trang chủ</button>
 </div>
+
+@model IEnumerable<QuizManagement.Models.Student>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Faculty</th>
+    </tr>
+    @foreach (var student in Model ?? new List<QuizManagement.Models.Student>())
+    {
+        <tr>
+            <td>@student.Id</td>
+            <td>@student.Name</td>
+            <td>@student.DOB.ToString("dd-MM-yyyy")</td>
+            <td>@student.Gender</td>
+            <td>@student.Address</td>
+            <td>@student.Email</td>
+            <td>@student.Faculty</td>
+        </tr>
+    }
+</table>
 
 <style>
     button {
@@ -29,5 +55,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    table {
+        border: 1px solid;
     }
 </style>

@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using AspNetCoreGeneratedDocument;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Oracle.ManagedDataAccess.Client;
 
 namespace QuizManagement.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -134,165 +136,8 @@ namespace QuizManagement.Controllers
         }
     }
 
-    public class Student
-    {
-        [Key]
-        [Column("studentid")]
-        public required string Id { get; set; }
-
-        [Column("full_name")]
-        public required string Name { get; set; }
-
-        [Column("bdate")]
-        public DateTime DOB { get; set; }
-
-        [Column("gender")]
-        public char Gender { get; set; }
-
-        [Column("address")]
-        public required string Address { get; set; }
-
-        [Column("phone")]
-        public string? Phone { get; set; }
-
-        [Column("email")]
-        public required string Email { get; set; }
-
-        [Column("faculty")]
-        public string? Faculty { get; set; }
-    }
-
-    public class Lecturer
-    {
-        [Key]
-        [Column("l_citizen_id")] // Ensure the column name matches in the database
-        public required string Id { get; set; }
-
-        [Column("l_full_name")] // Map the name to "lecturer_name" if it's different in the database
-        public required string Name { get; set; }
-
-        [Column("l_bdate")]
-        public DateTime DOB { get; set; }
-
-        [Column("l_gender")]
-        public char Gender { get; set; }
-
-        [Column("l_address")]
-        public required string Address { get; set; }
-
-        [Column("l_phone")]
-        public string? Phone { get; set; }
-
-        [Column("l_email")]
-        public required string Email { get; set; }
-
-        [Column("l_faculty")]
-        public string? Faculty { get; set; }
-    }
-
-    public class Administrator
-    {
-        [Key]
-        [Column("ad_id")]
-        public required string Id { get; set; }
-
-        [Column("ad_name")]
-        public required string Name { get; set; }
-
-        [Column("ad_email")]
-        public required string Email { get; set; }
-
-        [Column("ad_role")]
-        public string? Role { get; set; }
-    }
-
-    public class Quizzes
-    {
-        [Key]
-        [Column("quiz_id")] // Ensure the column name matches in the database
-        public required string Id { get; set; }
-
-        [Column("start_time")]
-        public DateTime StartTime { get; set; }
-
-        [Column("end_time")]
-        public DateTime EndTime { get; set; }
-
-        [Column("time_limit")]
-        public int TimeLimit { get; set; }
-
-        [Column("questions")]
-        public int Questions { get; set; }
-    }
-
-    [PrimaryKey(nameof(QuizId), nameof(QuestionId))]
-    public class Questions
-    {
-        [Column("quiz_id")]
-        public required string QuizId { get; set; }
-
-        [Column("question_id")]
-        public required string QuestionId { get; set; }
-
-        [Column("question")]
-        public string? Question { get; set; }
-
-        [Column("answer_a")]
-        public string? AnswerA { get; set; }
-
-        [Column("answer_b")]
-        public string? AnswerB { get; set; }
-
-        [Column("answer_c")]
-        public string? AnswerC { get; set; }
-
-        [Column("answer_d")]
-        public string? AnswerD { get; set; }
-
-        [Column("answer_e")]
-        public string? AnswerE { get; set; }
-
-        [Column("correct")]
-        public char Correct { get; set; }
-    }
-
-    public class Scores
-    {
-        [Key]
-        [Column("student_id")] // Ensure the column name matches in the database
-        public required string StudentID { get; set; }
-
-        [Column("quiz_id")]
-        public required string QuizID { get; set; }
-
-        [Column("questions")]
-        public int Questions { get; set; }
-
-        [Column("correct")]
-        public int Correct { get; set; }
-
-        [Column("score")]
-        public float Score { get; set; }
-    }
-
-    public class Accounts
-    {
-        [Key]
-        [Column("username")]
-        public required string Username { get; set; }
-
-        [Column("password")]
-        public required string Password { get; set; }
-    }
-
-    public class ApplicationDbContext : DbContext
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
-
-        // Add DbSet properties for entities
+    public class OracleDbContext : DbContext { 
+        public OracleDbContext(DbContextOptions<OracleDbContext> options) : base(options) { }
         public DbSet<Student> Students { get; set; }
         public DbSet<Lecturer> Lecturers { get; set; }
         public DbSet<Administrator> Admins { get; set; }
@@ -301,57 +146,168 @@ namespace QuizManagement.Controllers
         public DbSet<Scores> Scores { get; set; }
         public DbSet<Accounts> Accounts { get; set; }
 
-        // Fluent API configuration for correct column mapping
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Student>()
-                .ToTable("Student")
-                .Property(s => s.Id).HasColumnName("studentid");
-
-            modelBuilder.Entity<Lecturer>()
-                .ToTable("Lecturer")
-                .Property(l => l.Id).HasColumnName("l_citizen_id");
-
-
-            modelBuilder.Entity<Administrator>()
-                .ToTable("Administrator")
-                .Property(a => a.Id).HasColumnName("ad_id");
-
-            modelBuilder.Entity<Quizzes>()
-                .ToTable("Quizzes")
-                .Property(q => q.Id).HasColumnName("quiz_id");
-
-            modelBuilder.Entity<Questions>()
-                .ToTable("Questions")
-                .Property(q => q.QuizId).HasColumnName("quiz_id");
+            modelBuilder.Entity<Scores>()
+                .HasOne(s => s.Student)
+                .WithMany()
+                .HasForeignKey(s => s.StudentID)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Scores>()
-                .ToTable("Scores")
-                .Property(s => s.StudentID).HasColumnName("student_id");
+                .HasOne(s => s.Quiz)
+                .WithMany()
+                .HasForeignKey(s => s.QuizID)
+                .OnDelete(DeleteBehavior.Cascade);
         }
+
     }
 
-    public class ManageStudentsController : Controller
+    public class DatabaseController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly OracleDbContext _context;
 
-        public ManageStudentsController(ApplicationDbContext context)
+        public DatabaseController(OracleDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string searchString)
+        // Index for Students
+        public IActionResult IndexStudents_AdminView()
         {
-            // Fetch all students or filter by search string
-            var students = from s in _context.Students
-                           select s;
+            var students = _context.Students.ToList() ?? new List<Student>();
+            return View("~/Views/Home/ManageStudents.cshtml", students);
+        }
 
-            if (!string.IsNullOrEmpty(searchString))
+        public IActionResult IndexStudents_LecturerView()
+        {
+            var students = _context.Students.ToList() ?? new List<Student>();
+            return View("~/Views/Home/ManageStudents_LecturerView.cshtml", students);
+        }
+
+        public IActionResult IndexLecturers()
+        {
+            var lecturers = _context.Lecturers.ToList() ?? new List<Lecturer>();
+            return View("~/Views/Home/ManageLecturers.cshtml", lecturers);
+        }
+
+        public IActionResult IndexAdmins()
+        {
+            var admins = _context.Admins.ToList() ?? new List<Administrator>();
+            return View("~/Views/Home/ManageAdmins.cshtml", admins);
+        }
+
+        public IActionResult IndexQuizzes()
+        {
+            var quizzes = _context.Quizzes.ToList();
+            return View("~/Views/Home/ManageQuizzes.cshtml", quizzes);
+        }
+
+        public IActionResult IndexQuestions()
+        {
+            var questions = _context.Questions.ToList();
+            return View("~/Views/Home/ManageQuestions.cshtml", questions);
+        }
+
+        public IActionResult IndexScores()
+        {
+            var scores = _context.Scores.ToList() ?? new List<Scores>();
+            return View("~/Views/Home/ManageScores.cshtml", scores);
+        }
+
+        public IActionResult IndexScores_StudentView()
+        {
+            var scores = _context.Scores.ToList() ?? new List<Scores>();
+            return View("~/Views/Home/ViewScores.cshtml", scores);
+        }
+
+        public IActionResult CreateStudent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateStudent([Bind("StudentID,Full_Name,BDate,Gender,Address,Phone,Email,Faculty")] Student student)
+        {
+            if (ModelState.IsValid)
             {
-                students = students.Where(s => s.Name.Contains(searchString) || s.Id.Contains(searchString));
+                _context.Add(student);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(IndexStudents_AdminView));
             }
+            return View(student);
+        }
 
-            return View(await students.ToListAsync());
+        public IActionResult CreateLecturer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateLecturer([Bind("L_Citizen_ID,L_Full_Name,L_BDate,L_Gender,L_Address,L_Phone,L_Email,Faculty")] Lecturer lecturer)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(lecturer);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(IndexLecturers));
+            }
+            return View(lecturer);
+        }
+
+        public IActionResult CreateAdmin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAdmin([Bind("AdminID,FullName,Email,Role")] Administrator admin)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(admin);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(IndexAdmins));
+            }
+            return View(admin);
+        }
+
+        public IActionResult EditStudent(int id)
+        {
+            var student = _context.Students.Find(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditStudent(int id, [Bind("StudentID,Full_Name,BDate,Gender,Address,Phone,Email,Faculty")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(student);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Students.Any(s => s.Id == student.Id))
+                    {
+                        return NotFound();
+                    }
+                    throw;
+                }
+                return RedirectToAction(nameof(IndexStudents_AdminView));
+            }
+            return View(student);
         }
     }
+
 }

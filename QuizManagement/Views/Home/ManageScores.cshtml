@@ -13,6 +13,27 @@
     <button style="background-color: deepskyblue;" onclick="location.href='@Url.Action("MainPageLecturer", "Home")'">Trở về trang chủ</button>
 </div>
 
+@model IEnumerable<QuizManagement.Models.Scores>
+<table>
+    <tr>
+        <th>Student ID</th>
+        <th>Quiz ID</th>
+        <th>Questions</th>
+        <th>Correct Answers</th>
+        <th>Score</th>
+    </tr>
+    @foreach (var scores in Model ?? new List<QuizManagement.Models.Scores>())
+    {
+        <tr>
+            <td>@scores.StudentID</td>
+            <td>@scores.QuizID</td>
+            <td>@scores.Questions</td>
+            <td>@scores.Correct</td>
+            <td>@scores.Score</td>
+        </tr>
+    }
+</table>
+
 <style>
     button {
         padding: 10px;
@@ -28,5 +49,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    table {
+        border: 1px solid;
     }
 </style>

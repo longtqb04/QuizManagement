@@ -11,7 +11,29 @@
 <div class="container">
     <br />
     <input type="text" placeholder="Search...">
+
+    @model IEnumerable<QuizManagement.Models.Scores>
+    <table>
+        <tr>
+            <th>Student ID</th>
+            <th>Quiz ID</th>
+            <th>Questions</th>
+            <th>Correct Answers</th>
+            <th>Score</th>
+        </tr>
+        @foreach (var scores in Model ?? new List<QuizManagement.Models.Scores>())
+        {
+            <tr>
+                <td>@scores.StudentID</td>
+                <td>@scores.QuizID</td>
+                <td>@scores.Questions</td>
+                <td>@scores.Correct</td>
+                <td>@scores.Score</td>
+            </tr>
+        }
+    </table>
 </div>
+
 
 <style>
     input {
@@ -24,5 +46,9 @@
     .container {
         height: 100vh;
         width: 100vw;
+    }
+
+    table {
+        border: 1px solid;
     }
 </style>

@@ -13,6 +13,35 @@
     <button style="background-color: deepskyblue;" onclick="location.href='@Url.Action("MainPageLecturer", "Home")'">Trở về trang chủ</button>
 </div>
 
+@model IEnumerable<QuizManagement.Models.Questions>
+<table>
+    <tr>
+        <th>Quiz ID</th>
+        <th>Question ID</th>
+        <th>Question</th>
+        <th>Answer A</th>
+        <th>Answer B</th>
+        <th>Answer C</th>
+        <th>Answer D</th>
+        <th>Answer E</th>
+        <th>Correct Answer</th>
+    </tr>
+    @foreach (var questions in Model ?? new List<QuizManagement.Models.Questions>())
+    {
+        <tr>
+            <td>@questions.QuizId</td>
+            <td>@questions.QuestionId</td>
+            <td>@questions.Question</td>
+            <td>@questions.AnswerA</td>
+            <td>@questions.AnswerB</td>
+            <td>@questions.AnswerC</td>
+            <td>@questions.AnswerD</td>
+            <td>@questions.AnswerE</td>
+            <td>@questions.Correct</td>
+        </tr>
+    }
+</table>
+
 <style>
     button {
         padding: 10px;
@@ -28,5 +57,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    table {
+        border: 1px solid;
     }
 </style>

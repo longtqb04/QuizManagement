@@ -30,4 +30,33 @@
         justify-content: center;
         align-items: center;
     }
+
+    table {
+        border: 1px solid;
+    }
 </style>
+
+@model IEnumerable<QuizManagement.Models.Lecturer>
+<table>
+    <tr>
+        <th>Citizen ID</th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Faculty</th>
+    </tr>
+    @foreach (var lecturer in Model ?? new List<QuizManagement.Models.Lecturer>())
+    {
+        <tr>
+            <td>@lecturer.Id</td>
+            <td>@lecturer.Name</td>
+            <td>@lecturer.DOB.ToString("dd-MM-yyyy")</td>
+            <td>@lecturer.Gender</td>
+            <td>@lecturer.Address</td>
+            <td>@lecturer.Email</td>
+            <td>@lecturer.Faculty</td>
+        </tr>
+    }
+</table>
