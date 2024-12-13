@@ -3,190 +3,32 @@
 }
 
 <div id="timer" style="text-align:center;color:gray;">
-    Time left: 00:01:00
+    Time left: 00:10:00
 </div>
 
+@model IEnumerable<QuizManagement.Models.Questions>
 <div class="quiz">
-    <form id="quizForm" action="QuizResult">
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question1" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question1" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question1" value="Rome">
-            <label for="rome">Rome</label>
-            <br />
-            <input type="radio" id="berlin" name="question1" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question1" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question2" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question2" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question2" value="Rome">
-            <label for="rome">Rome</label>
-            <br /> <input type="radio" id="berlin" name="question2" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question2" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question3" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question3" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question3" value="Rome">
-            <label for="rome">Rome</label>
-            <br />
-            <input type="radio" id="berlin" name="question3" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question3" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question4" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question4" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question4" value="Rome">
-            <label for="rome">Rome</label>
-            <br />
-            <input type="radio" id="berlin" name="question4" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question4" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question5" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question5" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question5" value="Rome">
-            <label for="rome">Rome</label>
-            <br />
-            <input type="radio" id="berlin" name="question5" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question5" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question6" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question6" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question6" value="Rome">
-            <label for="rome">Rome</label>
-            <br />
-            <input type="radio" id="berlin" name="question6" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question6" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question7" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question7" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question7" value="Rome">
-            <label for="rome">Rome</label>
-            <br />
-            <input type="radio" id="berlin" name="question7" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question7" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question8" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question8" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question8" value="Rome">
-            <label for="rome">Rome</label>
-            <br />
-            <input type="radio" id="berlin" name="question8" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question8" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question9" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question9" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question9" value="Rome">
-            <label for="rome">Rome</label>
-            <br />
-            <input type="radio" id="berlin" name="question9" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question9" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
-        <div class="question">
-            <b>What is the capital of France?</b>
-            <br />
-            <input type="radio" id="paris" name="question10" value="Paris">
-            <label for="paris">Paris</label>
-            <br />
-            <input type="radio" id="london" name="question10" value="London">
-            <label for="london">London</label>
-            <br />
-            <input type="radio" id="rome" name="question10" value="Rome">
-            <label for="rome">Rome</label>
-            <br />
-            <input type="radio" id="berlin" name="question10" value="Berlin">
-            <label for="berlin">Berlin</label>
-            <br />
-            <input type="radio" id="berlin" name="question10" value="Lisbon">
-            <label for="berlin">Lisbon</label>
-        </div>
+    <form id="quizForm" action="QuizResult" method="post">
+        @foreach (var question in Model) {
+            <div class="question">
+                <b>@question.Question</b>
+                <br />
+                <input type="radio" name="question-@question.QuestionId" required value="A">
+                <label for="@question.AnswerA">@question.AnswerA</label>
+                <br />
+                <input type="radio" name="question-@question.QuestionId" required value="B">
+                <label for="@question.AnswerB">@question.AnswerB</label>
+                <br />
+                <input type="radio" name="question-@question.QuestionId" required value="C">
+                <label for="@question.AnswerC">@question.AnswerC</label>
+                <br />
+                <input type="radio" name="question-@question.QuestionId" required value="D">
+                <label for="@question.AnswerD">@question.AnswerD</label>
+                <br />
+                <input type="radio" name="question-@question.QuestionId" required value="E">
+                <label for="@question.AnswerE">@question.AnswerE</label>
+            </div>
+        }
         <div class="submit">
             <br />
             <input type="submit" id="submit" value="Submit">
@@ -196,29 +38,48 @@
 </div>
 
 <script>
+    // Set the initial time left (in seconds)
     var timeLeft = 600;
-    var timer = document.getElementById('timer');
 
+    // Get the timer element
+    var timer = document.getElementById("timer");
+
+    // Function to format time as HH:MM:SS
     function formatTime(seconds) {
         var h = Math.floor(seconds / 3600);
         var m = Math.floor((seconds % 3600) / 60);
         var s = seconds % 60;
-        
-        return (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+
+        return (
+            (h < 10 ? "0" : "") + h +
+            ":" +
+            (m < 10 ? "0" : "") + m +
+            ":" +
+            (s < 10 ? "0" : "") + s
+        );
     }
-    
-    document.addEventListener()
-    setInterval(function() {
+
+    // Display the initial time on page load
+    timer.textContent = "Time left: " + formatTime(timeLeft);
+
+    // Start the countdown timer
+    var timerInterval = setInterval(function () {
+        // Decrease the time left by 1 second
         timeLeft--;
-        timerElement.textContent = "Time left: " + formatTime(timeLeft);
-        
+
+        // Update the timer display
+        timer.textContent = "Time left: " + formatTime(timeLeft);
+
+        // If the time runs out, stop the timer and submit the form
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
+            alert("Time is up! Submitting your quiz.");
             document.getElementById("quizForm").submit();
         }
     }, 1000);
-    
-    document.getElementById("quizForm").onsubmit = function(event) {
+
+    // Clear the timer when the form is submitted manually
+    document.getElementById("quizForm").onsubmit = function (event) {
         clearInterval(timerInterval);
     };
 </script>

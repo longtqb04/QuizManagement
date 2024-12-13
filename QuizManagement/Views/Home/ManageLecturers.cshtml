@@ -96,7 +96,7 @@
 
 <div class="overlay2">
     <div class="add2">
-        <form asp-action="EditLecturer" asp-controller="Database" method="post">
+        <form asp-action="EditLecturer" asp-controller="Database" asp-route-string="Id" method="post">
             <label style="width: 500px; height: 24px;" for="Id">Số CCCD</label>
             <br />
             <input type="text" name="Id" required />

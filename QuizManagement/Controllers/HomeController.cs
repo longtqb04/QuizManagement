@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Oracle.ManagedDataAccess.Client;
 using static System.Formats.Asn1.AsnWriter;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 
 namespace QuizManagement.Controllers
 {
@@ -203,6 +204,12 @@ namespace QuizManagement.Controllers
             return View("~/Views/Home/ManageQuizzes.cshtml", quizzes);
         }
 
+        public IActionResult IndexViewQuizzes()
+        {
+            var quizzes = _context.Quizzes.ToList();
+            return View("~/Views/Home/ViewQuizzes.cshtml", quizzes);
+        }
+
         public IActionResult IndexQuestions()
         {
             var questions = _context.Questions.ToList();
@@ -290,9 +297,17 @@ namespace QuizManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ques);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(IndexQuestions));
+                try
+                {
+                    _context.Add(ques);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(IndexQuestions));
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception and return error feedback
+                    ModelState.AddModelError(string.Empty, $"An error occurred while saving the question: {ex.Message}");
+                }
             }
             return View("~/Views/Home/ManageQuestions.cshtml", ques);
         }
@@ -402,7 +417,7 @@ namespace QuizManagement.Controllers
             return View("~/Views/Home/ManageStudents_LecturerView.cshtml", student);
         }
 
-        public IActionResult EditLecturer(int id)
+        public IActionResult EditLecturer(string id)
         {
             var lect = _context.Lecturers.Find(id);
             if (lect == null)
@@ -414,7 +429,7 @@ namespace QuizManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditLecturer(int id, [Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Lecturer lect)
+        public IActionResult EditLecturer(string id, [Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Lecturer lect)
         {
             if (ModelState.IsValid)
             {
@@ -471,7 +486,7 @@ namespace QuizManagement.Controllers
         }
 
         // Add actions for editing questions
-        public IActionResult EditQuestion(int id)
+        public IActionResult EditQuestion(string id)
         {
             var question = _context.Questions.Find(id);
             if (question == null)
@@ -483,7 +498,7 @@ namespace QuizManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditQuestion(int id, [Bind("QuizId,QuestionId,Question,AnswerA,AnswerB,AnswerC,AnswerD,AnswerE,Correct")] Questions ques)
+        public IActionResult EditQuestion(string id, [Bind("QuizId,QuestionId,Question,AnswerA,AnswerB,AnswerC,AnswerD,AnswerE,Correct")] Questions ques)
         {
             if (ModelState.IsValid)
             {
@@ -552,5 +567,66 @@ namespace QuizManagement.Controllers
                 : _context.Scores.Where(s => s.StudentID.Contains(searchQuery)).ToList();
             return View("~/Views/Home/ViewScores.cshtml", admins);
         }
+        public IActionResult EnterQuiz(string id)
+        {
+            // Fetch the quiz details using the provided ID
+            var quiz = _context.Quizzes.FirstOrDefault(q => q.Id == id);
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+
+            return View("~/Views/Home/EnterQuiz.cshtml", quiz);
+        }
+
+        [HttpGet]
+        public IActionResult TakeQuiz(string quizId)
+        {
+            var questions = _context.Questions
+                .Where(q => q.QuizId == quizId)
+                .ToList();
+
+            if (!questions.Any())
+            {
+                return NotFound("No questions found for this quiz.");
+            }
+            ViewData["Score"] = null;
+            ViewBag.QuizId = quizId;
+            return View("~/Views/Home/TakeQuiz.cshtml", questions);
+        }
+
+        [HttpPost]
+        public IActionResult QuizResult(IFormCollection form)
+        {
+            var questions = _context.Questions.ToList();
+            int totalQuestions = 0;
+            int correctAnswers = 0;
+
+            foreach (var question in questions)
+            {
+                string answer = form[$"question-{question.QuestionId}"];
+
+                if (!string.IsNullOrEmpty(answer))
+                {
+                    totalQuestions++;
+                    char userAnswer = answer[0];
+                    if (userAnswer == question.Correct)
+                    {
+                        correctAnswers++;
+                    }
+                }
+            }
+
+            double score = ((double)correctAnswers / totalQuestions) * 10;
+            score = Math.Round(score, 2);
+
+            ViewData["Score"] = score;
+            ViewData["StartTime"] = DateTime.Now.ToString("dd/MM/yyyy");
+            ViewData["EndTime"] = DateTime.Now.ToString("dd/MM/yyyy");
+
+            return View("~/Views/Home/QuizResult.cshtml");
+        }
     }
+
+
 }

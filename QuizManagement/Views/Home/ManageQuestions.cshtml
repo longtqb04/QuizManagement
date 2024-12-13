@@ -97,7 +97,7 @@
 
 <div class="overlay2">
     <div class="add2">
-        <form asp-action="EditQuestion" asp-controller="Database" method="post">
+        <form asp-action="EditQuestion" asp-controller="Database" asp-route-string="QuestionId" method="post">
             <label style="width: 500px; height: 24px;" for="QuizId">Mã đề thi</label>
             <br />
             <input type="text" name="QuizId" required />

@@ -6,14 +6,14 @@
     <br />
     <h1 style="text-align:center;">Sẵn sàng vào thi</h1>
     <br />
-    <h2 style="text-align:center;">Quiz 024002</h2>
+    <h2 style="text-align:center;">Quiz @Model.Id</h2>
     <br />
-    <p style="text-align:center;">Số câu hỏi: 10</p>
+    <p style="text-align:center;">Số câu hỏi: @Model.Questions</p>
     <br />
-    <p style="text-align:center;">Thời gian: 10 phút</p>
+    <p style="text-align:center;">Thời gian: @Model.TimeLimit phút</p>
     <br />
     <div class="enter">
-        <button onclick="location.href='@Url.Action("TakeQuiz", "Home")'">Vào thi</button>
+        <button onclick="location.href='@Url.Action("TakeQuiz", "Database", new { quizId = Model.Id })'">Vào thi</button>
     </div>
 </div>
 

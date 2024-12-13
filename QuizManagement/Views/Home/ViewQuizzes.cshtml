@@ -2,44 +2,26 @@
     Layout = "~/Views/Shared/_MainPage.cshtml";
 }
 
+@model IEnumerable<QuizManagement.Models.Quizzes>
 <div class="container">
     <br />
     <h1 style="text-align:center;">Danh sách bài thi</h1>
     <br />
     <ul class="quiz-list">
-        <li class="quiz">
-            <div class="details">
-                <h2>Quiz 024001</h2>
-                <span style="color: gray;">Số câu: 10</span>
+        @foreach (var quiz in Model ?? new List<QuizManagement.Models.Quizzes>())
+        {
+            <li class="quiz">
+                <div class="details">
+                <h2>Quiz @quiz.Id</h2>
+                <span style="color: gray;">Số câu: @quiz.Questions</span>
                 <span style="color: gray;">•</span>
-                <span style="color: gray;">Thời gian: 10 phút</span>
+                <span style="color: gray;">Thời gian: @quiz.TimeLimit phút</span>
             </div>
             <div class="enter">
-                <button onclick="location.href='@Url.Action("EnterQuiz", "Home")'">Vào thi</button>
+                <button onclick="location.href='@Url.Action("EnterQuiz", "Database", new { id = quiz.Id })'">Vào thi</button>
             </div>
         </li>
-        <li class="quiz">
-            <div class="details">
-                <h2>Quiz 024002</h2>
-                <span style="color: gray;">Số câu: 10</span>
-                <span style="color: gray;">•</span>
-                <span style="color: gray;">Thời gian: 10 phút</span>
-            </div>
-            <div class="enter">
-                <button onclick="location.href='@Url.Action("EnterQuiz", "Home")'">Vào thi</button>
-            </div>
-        </li>
-        <li class="quiz">
-            <div class="details">
-                <h2>Quiz 024003</h2>
-                <span style="color: gray;">Số câu: 10</span>
-                <span style="color: gray;">•</span>
-                <span style="color: gray;">Thời gian: 10 phút</span>
-            </div>
-            <div class="enter">
-                <button onclick="location.href='@Url.Action("EnterQuiz", "Home")'">Vào thi</button>
-            </div>
-        </li>
+        } 
     </ul>
 </div>
 
