@@ -11,6 +11,7 @@
 <div class="buttons">
     <button id="create" style="background-color: forestgreen;">Thêm giảng viên</button>
     <button id="edit">Chỉnh sửa thông tin</button>
+    <button id="delete" style="background-color: darkred;color:white">Xóa giảng viên</button>
     <button id="start" style="background-color: black;color:white;">Tìm kiếm</button>
     <button style="background-color: deepskyblue;" onclick="location.href='@Url.Action("MainPageAdmin", "Home")'">Trở về trang chủ</button>
 </div>
@@ -139,6 +140,19 @@
     </div>
 </div>
 
+<div class="overlay3">
+    <div class="add3">
+        <form asp-action="DeleteLecturer" asp-controller="Database" asp-route-string="Id" method="post">
+            <label style="width: 500px; height: 24px;" for="Id">Số CCCD</label>
+            <br />
+            <input type="text" name="Id" required />
+            <br />
+            <button type="submit" style="background-color:deepskyblue;position:fixed;">Xóa</button>
+        </form>
+        <button id="back3">Trở về</button>
+    </div>
+</div>
+
 <style>
     button {
         padding: 10px;
@@ -148,6 +162,12 @@
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .add {
@@ -180,16 +200,24 @@
         text-align: left;
     }
 
+    .add3 {
+        display: flex;
+        flex-direction: column;
+        width: 600px;
+        background-color: rgb(255, 255, 255);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Bóng mờ */
+        margin-top: 30px;
+        margin-bottom: 30px;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+    }
+
     input, select {
         height: 36px;
         width: 500px;
-
-    }
-
-    .buttons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     .search {
@@ -224,9 +252,17 @@
         justify-content: center;
     }
 
-    input {
-        width: 500px;
-        height: 36px;
+    .overlay3 {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
     }
 
     table {
@@ -262,11 +298,19 @@
         document.querySelector('.overlay2').style.display = 'flex';
     });
 
+    document.getElementById('delete').addEventListener('click', function () {
+        document.querySelector('.overlay3').style.display = 'flex';
+    });
+
     document.getElementById('back').addEventListener('click', function () {
         document.querySelector('.overlay').style.display = 'none';
     });
 
     document.getElementById('back2').addEventListener('click', function () {
         document.querySelector('.overlay2').style.display = 'none';
+    });
+
+    document.getElementById('back3').addEventListener('click', function () {
+        document.querySelector('.overlay3').style.display = 'none';
     });
 </script>

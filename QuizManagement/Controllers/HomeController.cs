@@ -485,7 +485,6 @@ namespace QuizManagement.Controllers
             return View("~/Views/Home/ManageQuizzes.cshtml", quiz);
         }
 
-        // Add actions for editing questions
         public IActionResult EditQuestion(string id)
         {
             var question = _context.Questions.Find(id);
@@ -504,7 +503,7 @@ namespace QuizManagement.Controllers
             {
                 try
                 {
-                    _context.Update(ques);
+                    _context.Questions.Update(ques);
                     _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -519,6 +518,76 @@ namespace QuizManagement.Controllers
             }
             return View("~/Views/Home/ManageQuestions.cshtml", ques);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteStudent_AdminView(string id)
+        {
+            var student = _context.Students.Find(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.Students.Remove(student);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(IndexStudents_AdminView));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error deleting student: {ex.Message}");
+                return RedirectToAction(nameof(IndexStudents_AdminView));
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteStudent_LecturerView(string id)
+        {
+            var student = _context.Students.Find(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.Students.Remove(student);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(IndexStudents_LecturerView));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error deleting student: {ex.Message}");
+                return RedirectToAction(nameof(IndexStudents_LecturerView));
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteLecturer(string id)
+        {
+            var lecturer = _context.Lecturers.Find(id);
+            if (lecturer == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _context.Lecturers.Remove(lecturer);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(IndexLecturers));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error deleting lecturer: {ex.Message}");
+                return RedirectToAction(nameof(IndexLecturers));
+            }
+        }
+
 
         public IActionResult SearchStudents_AdminView(string searchQuery)
         {
