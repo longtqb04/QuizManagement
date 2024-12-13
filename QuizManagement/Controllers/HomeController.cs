@@ -173,7 +173,6 @@ namespace QuizManagement.Controllers
             _context = context;
         }
 
-        // Index for Students
         public IActionResult IndexStudents_AdminView()
         {
             var students = _context.Students.ToList() ?? new List<Student>();
@@ -188,8 +187,8 @@ namespace QuizManagement.Controllers
 
         public IActionResult IndexLecturers()
         {
-            var lecturers = _context.Lecturers.ToList() ?? new List<Lecturer>();
-            return View("~/Views/Home/ManageLecturers.cshtml", lecturers);
+            var lect = _context.Lecturers.ToList() ?? new List<Lecturer>();
+            return View("~/Views/Home/ManageLecturers.cshtml", lect);
         }
 
         public IActionResult IndexAdmins()
@@ -335,19 +334,19 @@ namespace QuizManagement.Controllers
             return View(admin);
         }
 
-        public IActionResult EditStudent(int id)
+        public IActionResult EditStudent_AdminView(int id)
         {
             var student = _context.Students.Find(id);
             if (student == null)
             {
                 return NotFound();
             }
-            return View(student);
+            return View("~/Views/Home/ManageStudents.cshtml", student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditStudent(int id, [Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Student student)
+        public IActionResult EditStudent_AdminView(int id, [Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -366,7 +365,144 @@ namespace QuizManagement.Controllers
                 }
                 return RedirectToAction(nameof(IndexStudents_AdminView));
             }
-            return View(student);
+            return View("~/Views/Home/ManageStudents.cshtml", student);
+        }
+
+        public IActionResult EditStudent_LecturerView(int id)
+        {
+            var student = _context.Students.Find(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return View("~/Views/Home/ManageStudents.cshtml", student);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditStudent_LecturerView(int id, [Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(student);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Students.Any(s => s.Id == student.Id))
+                    {
+                        return NotFound();
+                    }
+                    throw;
+                }
+                return RedirectToAction(nameof(IndexStudents_LecturerView));
+            }
+            return View("~/Views/Home/ManageStudents_LecturerView.cshtml", student);
+        }
+
+        public IActionResult EditLecturer(int id)
+        {
+            var lect = _context.Lecturers.Find(id);
+            if (lect == null)
+            {
+                return NotFound();
+            }
+            return View("~/Views/Home/ManageLecturers.cshtml", lect);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditLecturer(int id, [Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Lecturer lect)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(lect);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Lecturers.Any(l => l.Id == lect.Id))
+                    {
+                        return NotFound();
+                    }
+                    throw;
+                }
+                return RedirectToAction(nameof(IndexLecturers));
+            }
+            return View("~/Views/Home/ManageLecturers.cshtml", lect);
+        }
+
+        public IActionResult EditQuiz(int id)
+        {
+            var quiz = _context.Quizzes.Find(id);
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+            return View("~/Views/Home/ManageQuizzes.cshtml", quiz);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditQuiz(int id, [Bind("Id,StartTime,EndTime,TimeLimit,Questions")] Quizzes quiz)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(quiz);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Quizzes.Any(q => q.Id == quiz.Id))
+                    {
+                        return NotFound();
+                    }
+                    throw;
+                }
+                return RedirectToAction(nameof(IndexQuizzes));
+            }
+            return View("~/Views/Home/ManageQuizzes.cshtml", quiz);
+        }
+
+        // Add actions for editing questions
+        public IActionResult EditQuestion(int id)
+        {
+            var question = _context.Questions.Find(id);
+            if (question == null)
+            {
+                return NotFound();
+            }
+            return View("~/Views/Home/ManageQuestions.cshtml", question);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditQuestion(int id, [Bind("QuizId,QuestionId,Question,AnswerA,AnswerB,AnswerC,AnswerD,AnswerE,Correct")] Questions ques)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(ques);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.Questions.Any(q => q.QuestionId == ques.QuestionId))
+                    {
+                        return NotFound();
+                    }
+                    throw;
+                }
+                return RedirectToAction(nameof(IndexQuestions));
+            }
+            return View("~/Views/Home/ManageQuestions.cshtml", ques);
         }
 
         public IActionResult SearchStudents_AdminView(string searchQuery)

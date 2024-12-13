@@ -19,5 +19,7 @@ namespace QuizManagement.Models
         public int TimeLimit { get; set; }
         [Column("QUESTIONS")]
         public int Questions { get; set; }
+
+        public ICollection<Questions> QuestionsList { get; set; } = new List<Questions>();
     }
 }

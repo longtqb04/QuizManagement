@@ -7,9 +7,10 @@ namespace QuizManagement.Models
     [Table("QUESTIONS")]
     public class Questions
     {
-        [Key]
+        
         [Column("QUIZ_ID")]
         public required string QuizId { get; set; }
+        [Key]
         [Column("QUESTION_ID")]
         public required string QuestionId { get; set; }
         [Column("QUESTION")]
@@ -26,5 +27,8 @@ namespace QuizManagement.Models
         public string? AnswerE { get; set; }
         [Column("CORRECT")]
         public char Correct { get; set; }
+
+        [ForeignKey("QuizId")]
+        public Quizzes Quiz { get; set; }
     }
 }
