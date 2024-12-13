@@ -10,7 +10,15 @@
 
 <div class="container">
     <br />
-    <input type="text" placeholder="Search...">
+    <div class="search">
+        <br />
+        <form asp-action="SearchScores_StudentView" method="get">
+            <input type="text" name="searchQuery" placeholder="Tìm kiếm theo MSSV" />
+            <button type="submit">Tìm kiếm</button>
+        </form>
+        <br />
+    </div>
+    <br />
 
     @model IEnumerable<QuizManagement.Models.Scores>
     <table>
@@ -36,11 +44,25 @@
 
 
 <style>
+    .search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        padding: 10px;
+        margin: 10px 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
     input {
-        width: 80%;
-        height: 35px;
-        border-radius: 10px;
-        border: 1px solid gray;
+        width: 500px;
+        height: 36px;
     }
 
     .container {
@@ -50,5 +72,20 @@
 
     table {
         border: 1px solid;
+        transform: translateX(20vw);
+        text-align: left;
+    }
+
+    th {
+        background-color: black;
+        color: white;
+    }
+
+    tr {
+        height: 20px;
+    }
+
+    td {
+        width: auto;
     }
 </style>

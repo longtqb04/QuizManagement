@@ -9,32 +9,19 @@
 </div>
 
 <div class="buttons">
-    <button style="background-color: forestgreen;">Thêm giảng viên</button>
-    <button style="background-color: black;color:white;">Tìm kiếm</button>
+    <button id="create" style="background-color: forestgreen;">Thêm giảng viên</button>
+    <button id="start" style="background-color: black;color:white;">Tìm kiếm</button>
     <button style="background-color: deepskyblue;" onclick="location.href='@Url.Action("MainPageAdmin", "Home")'">Trở về trang chủ</button>
 </div>
 
-<style>
-    button {
-        padding: 10px;
-        margin: 10px 10px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .buttons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    table {
-        border: 1px solid;
-    }
-</style>
+<div class="search">
+    <br />
+    <form asp-action="SearchLecturers" method="get">
+        <input type="text" name="searchQuery" placeholder="Tìm kiếm theo tên" />
+        <button type="submit">Tìm kiếm</button>
+    </form>
+    <br />
+</div>
 
 @model IEnumerable<QuizManagement.Models.Lecturer>
 <table>
@@ -60,3 +47,144 @@
         </tr>
     }
 </table>
+
+<div class="overlay">
+    <div class="add">
+        <form asp-action="CreateLecturer" asp-controller="Database" method="post">
+            <label style="width: 500px; height: 24px;" for="Id">Số CCCD</label>
+            <br />
+            <input type="text" name="Id" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="Name">Họ và tên</label>
+            <br />
+            <input type="text" name="Name" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="DOB">Ngày sinh</label>
+            <br />
+            <input type="date" name="DOB" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="Gender">Giới tính</label>
+            <br />
+            <select name="Gender" id="gender" required>
+                <option value="" disabled selected>Chọn giới tính</option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+            </select>
+            <br />
+            <label style="width: 500px; height: 24px;" for="Address">Địa chỉ</label>
+            <br />
+            <input type="text" name="Address" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="Email">Email</label>
+            <br />
+            <input type="email" name="Email" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="Phone">Số điện thoại</label>
+            <br />
+            <input type="tel" name="Phone" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="Faculty">Khoa</label>
+            <br />
+            <input type="text" name="Faculty" required />
+            <br />
+            <button type="submit" style="background-color:deepskyblue;position:fixed;">Thêm</button>
+        </form>
+        <button id="back">Trở về</button>
+    </div>
+</div>
+
+<style>
+    button {
+        padding: 10px;
+        margin: 10px 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .add {
+        display: flex;
+        flex-direction: column;
+        width: 600px;
+        background-color: rgb(255, 255, 255);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Bóng mờ */
+        margin-top: 30px;
+        margin-bottom: 30px;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+    }
+
+    input, select {
+        height: 36px;
+        width: 500px;
+
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .search {
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input {
+        width: 500px;
+        height: 36px;
+    }
+
+    table {
+        border: 1px solid;
+        transform: translateX(20vw);
+        text-align: left;
+    }
+
+    th {
+        background-color: black;
+        color: white;
+    }
+
+    tr {
+        height: 20px;
+    }
+
+    td {
+        width: auto;
+    }
+</style>
+
+<script>
+    document.getElementById('start').addEventListener('click', function () {
+        document.querySelector('.search').style.display = 'flex';
+    });
+
+    document.getElementById('create').addEventListener('click', function () {
+        document.querySelector('.overlay').style.display = 'flex';
+    });
+
+    document.getElementById('back').addEventListener('click', function () {
+        document.querySelector('.overlay').style.display = 'none';
+    });
+</script>

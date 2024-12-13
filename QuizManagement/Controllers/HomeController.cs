@@ -6,6 +6,7 @@ using AspNetCoreGeneratedDocument;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Oracle.ManagedDataAccess.Client;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace QuizManagement.Controllers
 {
@@ -221,14 +222,15 @@ namespace QuizManagement.Controllers
             return View("~/Views/Home/ViewScores.cshtml", scores);
         }
 
-        public IActionResult CreateStudent()
+        public IActionResult CreateStudent_AdminView()
         {
-            return View();
+            var student = _context.Students.ToList() ?? new List<Student>();
+            return View("~/Views/Home/ManageStudents.cshtml", student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateStudent([Bind("StudentID,Full_Name,BDate,Gender,Address,Phone,Email,Faculty")] Student student)
+        public IActionResult CreateStudent_AdminView([Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -236,17 +238,75 @@ namespace QuizManagement.Controllers
                 _context.SaveChanges();
                 return RedirectToAction(nameof(IndexStudents_AdminView));
             }
-            return View(student);
+            return View("~/Views/Home/ManageStudents.cshtml", student);
         }
 
-        public IActionResult CreateLecturer()
+        public IActionResult CreateStudent_LecturerView()
         {
-            return View();
+            var student = _context.Students.ToList() ?? new List<Student>();
+            return View("~/Views/Home/ManageStudents_LecturerView.cshtml", student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateLecturer([Bind("L_Citizen_ID,L_Full_Name,L_BDate,L_Gender,L_Address,L_Phone,L_Email,Faculty")] Lecturer lecturer)
+        public IActionResult CreateStudent_LecturerView([Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Student student)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(student);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(IndexStudents_LecturerView));
+            }
+            return View("~/Views/Home/ManageStudents_LecturerView.cshtml", student);
+        }
+
+        public IActionResult CreateQuizzes()
+        {
+            var quiz = _context.Quizzes.ToList() ?? new List<Quizzes>();
+            return View("~/Views/Home/ManageQuizzes.cshtml", quiz);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateQuizzes([Bind("Id,StartTime,EndTime,TimeLimit,Questions")] Quizzes quiz)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(quiz);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(IndexQuizzes));
+            }
+            return View("~/Views/Home/ManageQuizzes.cshtml", quiz);
+        }
+
+        public IActionResult CreateQuestions()
+        {
+            var question = _context.Questions.ToList() ?? new List<Questions>();
+            return View("~/Views/Home/ManageQuestions.cshtml", question);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateQuestions([Bind("QuizId,QuestionId,Question,AnswerA,AnswerB,AnswerC,AnswerD,AnswerE,Correct")] Questions ques)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(ques);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(IndexQuestions));
+            }
+            return View("~/Views/Home/ManageQuestions.cshtml", ques);
+        }
+
+        public IActionResult CreateLecturer()
+        {
+            var lecturer = _context.Lecturers.ToList() ?? new List<Lecturer>();
+            return View("~/Views/Home/ManageLecturers.cshtml", lecturer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateLecturer([Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Lecturer lecturer)
         {
             if (ModelState.IsValid)
             {
@@ -254,7 +314,7 @@ namespace QuizManagement.Controllers
                 _context.SaveChanges();
                 return RedirectToAction(nameof(IndexLecturers));
             }
-            return View(lecturer);
+            return View("~/Views/Home/ManageLecturers.cshtml", lecturer);
         }
 
         public IActionResult CreateAdmin()
@@ -287,7 +347,7 @@ namespace QuizManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditStudent(int id, [Bind("StudentID,Full_Name,BDate,Gender,Address,Phone,Email,Faculty")] Student student)
+        public IActionResult EditStudent(int id, [Bind("Id,Name,DOB,Gender,Address,Phone,Email,Faculty")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -308,6 +368,53 @@ namespace QuizManagement.Controllers
             }
             return View(student);
         }
-    }
 
+        public IActionResult SearchStudents_AdminView(string searchQuery)
+        {
+            var students = string.IsNullOrWhiteSpace(searchQuery)
+                ? _context.Students.ToList()
+                : _context.Students.Where(s => s.Name.Contains(searchQuery)).ToList();
+            return View("~/Views/Home/ManageStudents.cshtml", students);
+        }
+
+        public IActionResult SearchStudents_LecturerView(string searchQuery)
+        {
+            var students = string.IsNullOrWhiteSpace(searchQuery)
+                ? _context.Students.ToList()
+                : _context.Students.Where(s => s.Name.Contains(searchQuery)).ToList();
+            return View("~/Views/Home/ManageStudents_LecturerView.cshtml", students);
+        }
+
+        public IActionResult SearchLecturers(string searchQuery)
+        {
+            var lecturers = string.IsNullOrWhiteSpace(searchQuery)
+                ? _context.Lecturers.ToList()
+                : _context.Lecturers.Where(l => l.Name.Contains(searchQuery)).ToList();
+            return View("~/Views/Home/ManageLecturers.cshtml", lecturers);
+        }
+
+        public IActionResult SearchAdmins(string searchQuery)
+        {
+            var admins = string.IsNullOrWhiteSpace(searchQuery)
+                ? _context.Admins.ToList()
+                : _context.Admins.Where(a => a.Name.Contains(searchQuery)).ToList();
+            return View("~/Views/Home/ManageAdmins.cshtml", admins);
+        }
+
+        public IActionResult SearchScores_LecturerView(string searchQuery)
+        {
+            var admins = string.IsNullOrWhiteSpace(searchQuery)
+                ? _context.Scores.ToList()
+                : _context.Scores.Where(s => s.StudentID.Contains(searchQuery)).ToList();
+            return View("~/Views/Home/ManageScores.cshtml", admins);
+        }
+
+        public IActionResult SearchScores_StudentView(string searchQuery)
+        {
+            var admins = string.IsNullOrWhiteSpace(searchQuery)
+                ? _context.Scores.ToList()
+                : _context.Scores.Where(s => s.StudentID.Contains(searchQuery)).ToList();
+            return View("~/Views/Home/ViewScores.cshtml", admins);
+        }
+    }
 }

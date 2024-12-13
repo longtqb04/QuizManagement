@@ -9,7 +9,7 @@
 </div>
 
 <div class="buttons">
-    <button style="background-color: forestgreen;">Thêm câu hỏi</button>
+    <button id="create" style="background-color: forestgreen;">Thêm câu hỏi</button>
     <button style="background-color: deepskyblue;" onclick="location.href='@Url.Action("MainPageLecturer", "Home")'">Trở về trang chủ</button>
 </div>
 
@@ -42,6 +42,58 @@
     }
 </table>
 
+<div class="overlay">
+    <div class="add">
+        <form asp-action="CreateQuestions" asp-controller="Database" method="post">
+            <label style="width: 500px; height: 24px;" for="QuizId">Mã đề thi</label>
+            <br />
+            <input type="text" name="QuizId" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="QuestionId">Mã câu hỏi</label>
+            <br />
+            <input type="text" name="QuestionId" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="Question">Câu hỏi</label>
+            <br />
+            <input type="text" name="Question" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="AnswerA">A.</label>
+            <br />
+            <input type="text" name="AnswerA" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="AnswerB">B.</label>
+            <br />
+            <input type="text" name="AnswerB" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="AnswerC">C.</label>
+            <br />
+            <input type="text" name="AnswerC" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="AnswerD">D.</label>
+            <br />
+            <input type="text" name="AnswerD" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="AnswerE">E.</label>
+            <br />
+            <input type="text" name="AnswerE" required />
+            <br />
+            <label style="width: 500px; height: 24px;" for="Correct">Đáp án đúng</label>
+            <br />
+            <select name="Correct" required>
+                <option value="" disabled selected>Chọn đáp án đúng</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+            </select>
+            <br />
+            <button type="submit" style="background-color:deepskyblue;position:fixed;">Thêm</button>
+        </form>
+        <button id="back">Trở về</button>
+    </div>
+</div>
+
 <style>
     button {
         padding: 10px;
@@ -59,7 +111,65 @@
         align-items: center;
     }
 
+    .add {
+        display: flex;
+        flex-direction: column;
+        width: 600px;
+        background-color: rgb(255, 255, 255);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Bóng mờ */
+        margin-top: 30px;
+        margin-bottom: 30px;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input, select {
+        height: 36px;
+        width: 500px;
+    }
+
     table {
         border: 1px solid;
+        transform: translateX(20vw);
+        text-align: left;
+    }
+
+    th {
+        background-color: black;
+        color: white;
+    }
+
+    tr {
+        height: 20px;
+    }
+
+    td {
+        width: auto;
     }
 </style>
+
+<script>
+    document.getElementById('create').addEventListener('click', function () {
+        document.querySelector('.overlay').style.display = 'flex';
+    });
+
+    document.getElementById('back').addEventListener('click', function () {
+        document.querySelector('.overlay').style.display = 'none';
+    });
+</script>

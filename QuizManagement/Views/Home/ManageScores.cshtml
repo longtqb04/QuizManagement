@@ -9,8 +9,17 @@
 </div>
 
 <div class="buttons">
-    <button style="background-color: black;color:white;">Tìm kiếm</button>
+    <button id="start" style="background-color: black;color:white;">Tìm kiếm</button>
     <button style="background-color: deepskyblue;" onclick="location.href='@Url.Action("MainPageLecturer", "Home")'">Trở về trang chủ</button>
+</div>
+
+<div class="search">
+    <br />
+    <form asp-action="SearchScores_LecturerView" method="get">
+        <input type="text" name="searchQuery" placeholder="Tìm kiếm theo MSSV" />
+        <button type="submit">Tìm kiếm</button>
+    </form>
+    <br />
 </div>
 
 @model IEnumerable<QuizManagement.Models.Scores>
@@ -51,7 +60,39 @@
         align-items: center;
     }
 
+    .search {
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    input {
+        width: 500px;
+        height: 36px;
+    }
+
     table {
         border: 1px solid;
+        transform: translateX(20vw);
+        text-align: left;
+    }
+
+    th {
+        background-color: black;
+        color: white;
+    }
+
+    tr {
+        height: 20px;
+    }
+
+    td {
+        width: auto;
     }
 </style>
+
+<script>
+    document.getElementById('start').addEventListener('click', function () {
+        document.querySelector('.search').style.display = 'flex';
+    });
+</script>
